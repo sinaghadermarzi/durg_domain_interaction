@@ -45,8 +45,17 @@ The repository contains only the notebook. You need to provide:
 - `DTIPred/` with the three interaction files above and `uniprotids_annnots.tab` (the notebook writes
   `DTIPred/uniprotids.txt`, the ID list to upload to UniProt's ID mapping to produce that table);
 - `data/BindingDB_All_2021m0.tsv/BindingDB_All.tsv`, the full BindingDB TSV export;
+- `temp/unique_uniprot_info.tab`, read unconditionally by the report cell: a tab-separated UniProt
+  ID-mapping export whose columns include `Entry`, `Status`, `Proteomes`, `Entry name`, `Organism`,
+  `Fragment`, `Length` and the submitted-ID column, which the notebook addresses by the literal header
+  `yourlist:M202103015C475328CEF75220C360D524E9D456CE1638CDK` (UniProt named it after the upload job;
+  rename that column, or edit the notebook, when you produce your own table);
 - the directories `temp/domain_data/`, `temp/pickled_data/` and `outputs/` must exist before the cells
   that write into them.
+
+The BindingDB loading cell calls `pandas.read_csv(..., error_bad_lines=False)`, an argument removed in
+pandas 2.0, so `requirements.txt` pins `pandas<2`. On pandas 2.x replace it with
+`on_bad_lines="skip"`.
 
 The Pfam records are downloaded from `http://pfam.xfam.org/protein/<id>?output=xml`. That legacy Pfam
 site has since been retired in favour of InterPro, so the download step will need to be pointed at a
