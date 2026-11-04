@@ -1,0 +1,7 @@
+jupyter
+pandas<2  # the notebook uses read_csv(error_bad_lines=...), removed in pandas 2.0
+numpy
+matplotlib
+requests
+xmltodict
+tabulate
